@@ -184,22 +184,15 @@ MinimizeButton.MouseButton1Click:Connect(function()
 	end
 end)
 
--- Logic đóng GUI với animation từ dấu - về dấu +
+-- Logic đóng GUI và destroy hoàn toàn
 CloseButton.MouseButton1Click:Connect(function()
 	local tweenInfo = TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.In)
 	local tween = TweenService:Create(BG, tweenInfo, {
-		Size = UDim2.new(0, 0, 0, 0), -- Thu nhỏ về kích thước 0
+		Size = UDim2.new(0, 0, 0, 0), -- Thu nhỏ về kích thước 0 trước khi destroy
 		Position = minimizePosition -- Thu về vị trí của dấu +
 	})
 	tween:Play()
 	tween.Completed:Connect(function()
-		BG.Visible = false
-		MinimizeButton.Parent = Noclip
-		MinimizeButton.Position = minimizePosition
-		MinimizeButton.Size = UDim2.new(0, 30, 0, 30)
-		MinimizeButton.Text = "+"
-		MinimizeButton.Draggable = true
-		CloseButton.Visible = false -- Ẩn nút x để chỉ còn dấu +
-		isMinimized = true -- Đặt trạng thái thành đã thu nhỏ
+		Noclip:Destroy() -- Xóa hoàn toàn ScreenGui
 	end)
 end)
