@@ -1,0 +1,133 @@
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local UserInputService = game:GetService("UserInputService")
+local Workspace = game:GetService("Workspace") -- Thêm Workspace
+local Plr = Players.LocalPlayer
+local PlayerGui = Plr:WaitForChild("PlayerGui")
+local Clipon = false
+
+-- Tạo ScreenGui
+local Noclip = Instance.new("ScreenGui")
+Noclip.Name = "Noclip"
+Noclip.Parent = PlayerGui
+Noclip.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+local Frame = Instance.new("Frame")
+Frame.Parent = Noclip
+Frame.BackgroundColor3 = Color3.new(0.15, 0.15, 0.15)
+Frame.BorderSizePixel = 0
+Frame.Position = UDim2.new(0.02, 0, 0.02, 0)
+Frame.Size = UDim2.new(0, 40, 0, 40)
+Frame.ZIndex = 10
+
+local UICorner = Instance.new("UICorner")
+UICorner.CornerRadius = UDim.new(0, 10)
+UICorner.Parent = Frame
+
+local UIGradient = Instance.new("UIGradient")
+UIGradient.Color = ColorSequence.new{
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(100, 0, 255)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(0, 200, 255))
+}
+UIGradient.Rotation = 45
+UIGradient.Parent = Frame
+
+local Toggle = Instance.new("TextButton")
+Toggle.Parent = Frame
+Toggle.BackgroundColor3 = Color3.new(0.2, 0.2, 0.2)
+Toggle.BackgroundTransparency = 0.2
+Toggle.BorderSizePixel = 0
+Toggle.Size = UDim2.new(0.8, 0, 0.8, 0)
+Toggle.Position = UDim2.new(0.1, 0, 0.1, 0)
+Toggle.Font = Enum.Font.GothamBold
+Toggle.Text = "OFF"
+Toggle.TextColor3 = Color3.fromRGB(255, 80, 80)
+Toggle.TextSize = 16
+Toggle.TextStrokeTransparency = 0.8
+Toggle.ZIndex = 11
+
+local ButtonCorner = Instance.new("UICorner")
+ButtonCorner.CornerRadius = UDim.new(0, 6)
+ButtonCorner.Parent = Toggle
+
+-- Custom dragging functionality cho mobile
+local dragging = false
+local dragStart = nil
+local startPos = nil
+
+local function update(input)
+    local delta = input.Position - dragStart
+    local viewportSize = workspace.CurrentCamera.ViewportSize
+    Frame.Position = UDim2.new(
+        0, math.clamp(startPos.X.Offset + delta.X, 0, viewportSize.X - Frame.Size.X.Offset),
+        0, math.clamp(startPos.Y.Offset + delta.Y, 0, viewportSize.Y - Frame.Size.Y.Offset)
+    )
+end
+
+UserInputService.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.Touch then
+        local touchPos = input.Position
+        local framePos = Frame.AbsolutePosition
+        local frameSize = Frame.AbsoluteSize
+        if touchPos.X >= framePos.X and touchPos.X <= framePos.X + frameSize.X and
+           touchPos.Y >= framePos.Y and touchPos.Y <= framePos.Y + frameSize.Y then
+            dragging = true
+            dragStart = touchPos
+            startPos = Frame.Position
+        end
+    end
+end)
+
+UserInputService.InputChanged:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.Touch and dragging then
+        update(input)
+    end
+end)
+
+UserInputService.InputEnded:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.Touch then
+        dragging = false
+    end
+end)
+
+-- Noclip functionality (Thay thế từ script thứ hai)
+local Stepped
+Toggle.MouseButton1Click:Connect(function()
+    if Toggle.Text == "OFF" then
+        Clipon = true
+        Toggle.Text = "ON"
+        Toggle.TextColor3 = Color3.fromRGB(80, 255, 80)
+        
+        Stepped = RunService.Stepped:Connect(function()
+            if not Clipon == false then
+                for a, b in pairs(Workspace:GetChildren()) do
+                    if b.Name == Plr.Name then
+                        for i, v in pairs(Workspace[Plr.Name]:GetChildren()) do
+                            if v:IsA("BasePart") then
+                                v.CanCollide = false
+                            end
+                        end
+                    end
+                end
+            else
+                Stepped:Disconnect()
+            end
+        end)
+    elseif Toggle.Text == "ON" then
+        Clipon = false
+        Toggle.Text = "OFF"
+        Toggle.TextColor3 = Color3.fromRGB(255, 80, 80)
+        if Stepped then
+            Stepped:Disconnect()
+        end
+    end
+end)
+
+-- Hover effect
+Toggle.MouseEnter:Connect(function()
+    Toggle.BackgroundTransparency = 0.1
+end)
+
+Toggle.MouseLeave:Connect(function()
+    Toggle.BackgroundTransparency = 0.2
+end)
