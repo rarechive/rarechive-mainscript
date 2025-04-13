@@ -1,11 +1,28 @@
-local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
-local Window = Library.CreateLib("My Hack Hub", "DarkTheme")
+local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
+local Window = Fluent:CreateWindow({
+    Title = "My Hack Hub",
+    SubTitle = "by rarechive",
+    TabWidth = 160,
+    Size = UDim2.fromOffset(580, 460),
+    Theme = "Dark",
+    Acrylic = true,
+    MinimizeKey = Enum.KeyCode.RightControl
+})
 
-local Tab1 = Window:NewTab("Hacks")
-local Section1 = Tab1:NewSection("Controls")
-Section1:NewButton("Test Hack", "Chạy thử", function()
-    print("Hack activated!")
-end)
-Section1:NewButton("Teleport to Spawn", "Dịch chuyển", function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(0, 10, 0)
-end)
+local Tabs = {
+    Main = Window:AddTab({ Title = "Hacks", Icon = "home" })
+}
+
+local Section = Tabs.Main:AddSection("Controls")
+
+Section:AddButton({
+    Title = "Test Hack",
+    Description = "Chạy thử",
+    Callback = function()
+        Fluent:Notify({
+            Title = "Test",
+            Content = "Hack activated!",
+            Duration = 3
+        })
+    end
+})
