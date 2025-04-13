@@ -1,9 +1,20 @@
 -- RareXploit Main Script by Rarechive
-local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
+local HttpService = game:GetService("HttpService")
 local Players = game:GetService("Players")
 local Player = Players.LocalPlayer
 
--- Initialize Window without Size
+-- Load Fluent with error handling
+local Fluent
+local success, err = pcall(function()
+    Fluent = loadstring(HttpService:GetAsync("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
+end)
+
+if not success or not Fluent then
+    warn("Failed to load Fluent UI: " .. tostring(err))
+    return
+end
+
+-- Initialize Window
 local Window = Fluent:CreateWindow({
     Title = "RareXploit",
     SubTitle = "by Rarechive"
@@ -53,8 +64,8 @@ ScreenGui.IgnoreGuiInset = true
 ScreenGui.ResetOnSpawn = false
 
 local Frame = ScreenGui:FindFirstChild("Main") or ScreenGui.Frame
-Frame.Size = UDim2.new(0, 400, 0, 300) -- Set size here instead
-Frame.Position = UDim2.new(0.5, -200, 0.5, -150) -- Center with offset for 400x300
+Frame.Size = UDim2.new(0, 400, 0, 300)
+Frame.Position = UDim2.new(0.5, -200, 0.5, -150)
 
 -- Notify on Load
 Fluent:Notify({
