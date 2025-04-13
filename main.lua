@@ -4,7 +4,7 @@ local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/d
 local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
 
 -- Load GUI from gui.lua
-local gui = loadstring(game:HttpGet("URL_TO_YOUR_GUI_LUA"))() -- Replace with the actual URL to gui.lua
+local gui = loadstring(game:HttpGet("https://raw.githubusercontent.com/rarechive/rarechive-mainscript/refs/heads/main/gui.lua"))() -- Replace with the actual URL to gui.lua
 
 -- Create the GUI
 local Window, Tabs, Options = gui.CreateGUI(RareXploit)
