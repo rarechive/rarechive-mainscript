@@ -16,7 +16,7 @@ InterfaceManager:SetFolder("RareXploit")
 SaveManager:SetFolder("RareXploit/specific-game")
 
 -- Load GUI from gui.lua
-local gui = loadstring(game:HttpGet("loadstring(game:HttpGet("https://raw.githubusercontent.com/rarechive/rarechive-mainscript/refs/heads/main/gui.lua"))()"))()
+local gui = loadstring(game:HttpGet("https://raw.githubusercontent.com/rarechive/rarechive-mainscript/refs/heads/main/gui.lua"))()"))()
 
 -- Load autoload config
 SaveManager:LoadAutoloadConfig()
