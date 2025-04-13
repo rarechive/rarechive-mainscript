@@ -3,14 +3,6 @@
 -- Compatible with Delta Executor
 
 -- Kiểm tra nếu đang chạy trên Delta Executor
-if not getgenv().Delta then
-    game:GetService("StarterGui"):SetCore("SendNotification", {
-        Title = "RareXploit",
-        Text = "This script is designed for Delta Executor!",
-        Duration = 5
-    })
-    return
-end
 
 -- Tải thư viện Fluent
 local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
