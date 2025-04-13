@@ -1,1 +1,9 @@
+-- gui.lua
+local Gui = {}
 
+function Gui:CreateMainWindow()
+    local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
+    return Library.CreateLib("My Hack Hub", "DarkTheme")
+end
+
+return Gui
