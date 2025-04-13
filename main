@@ -1,45 +1,7 @@
 local Gui = require(script.Parent.gui)
-local SpeedHack = require(script.Parent.speed_hack)
 
 local Window, Fluent = Gui:CreateHub()
 
 local Tabs = {
     Main = Window:AddTab({ Title = "Hacks", Icon = "home" })
 }
-
-local Section = Tabs.Main:AddSection("Controls")
-
-Section:AddButton({
-    Title = "Test Hack",
-    Description = "Chạy thử",
-    Callback = function()
-        Fluent:Notify({
-            Title = "Test",
-            Content = "Hack activated!",
-            Duration = 3
-        })
-    end
-})
-
-Section:AddToggle({
-    Title = "Speed Hack",
-    Description = "Bật/tắt tăng tốc",
-    Default = false,
-    Callback = function(value)
-        if value then
-            SpeedHack:Enable()
-            Fluent:Notify({
-                Title = "Speed Hack",
-                Content = "Speed ON",
-                Duration = 3
-            })
-        else
-            SpeedHack:Disable()
-            Fluent:Notify({
-                Title = "Speed Hack",
-                Content = "Speed OFF",
-                Duration = 3
-            })
-        end
-    end
-})
