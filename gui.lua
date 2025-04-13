@@ -1,27 +1,15 @@
--- RareXploit GUI Configuration
--- Handles GUI-specific settings for RareXploit by Rarechive
-
+-- RareXploit GUI Configuration by Rarechive
 local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
 
--- Function to adjust GUI for mobile
-local function adjustGuiForMobile(window)
-    -- Set rectangular size suitable for mobile
-    window.Size = UDim2.fromOffset(480, 320) -- 80% width, 70% height for most mobile screens
-    
-    -- Center the GUI
-    window.Position = UDim2.new(0.5, -240, 0.5, -160) -- Offset by half the size to center
-    
-    -- Ensure GUI doesn't touch top/bottom edges
-    local safeArea = game:GetService("GuiService"):GetGuiInset()
-    local topInset, bottomInset = safeArea.Y, safeArea.Y
-    window.Position = UDim2.new(
-        0.5, -240,
-        0, math.clamp(window.Position.Y.Offset, topInset, 320 - bottomInset)
-    )
-end
+-- GUI Setup
+Fluent:CreateWindow({
+    Title = "RareXploit",
+    SubTitle = "by Rarechive",
+    Size = UDim2.new(0, 400, 0, 300),
+    Theme = "Dark", -- Default theme
+    Acrylic = true, -- Acrylic effect for mobile
+    MinimizeKey = Enum.KeyCode.RightControl
+})
 
--- Apply mobile adjustments when GUI is created
-local Window = Fluent:GetWindow()
-if Window then
-    adjustGuiForMobile(Window)
-end
+-- Load Main Script
+loadstring(game:HttpGet("https://raw.githubusercontent.com/rarechive/rarechive-mainscript/main/main.lua"))()
