@@ -26,3 +26,16 @@ Section:AddButton({
         })
     end
 })
+
+Section:AddToggle({
+    Title = "Toggle Hack",
+    Description = "Bật/tắt hack thử nghiệm",
+    Default = false,
+    Callback = function(value)
+        Fluent:Notify({
+            Title = "Toggle Status",
+            Content = value and "Toggle ON" or "Toggle OFF",
+            Duration = 3
+        })
+    end
+})
