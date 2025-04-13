@@ -1,7 +1,7 @@
 -- main.lua
 
--- Tải thư viện Fluent
-local Fluent = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Main.lua"))()
+-- Tải thư viện Fluent với URL mới
+local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
 
 -- Tạo hub
 local Hub = Fluent:CreateHub({
