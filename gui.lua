@@ -1,27 +1,94 @@
--- gui.lua
+-- RareXploit GUI Script
+-- Created by Rarechive
+-- Uses Fluent Library by dawid
 
-return function(Hub)
-    -- Tạo tab Information
-    local InfoTab = Hub:CreateTab("Information", "rbxassetid://1234567890")
-    
-    -- Thêm các thành phần vào tab Information
-    InfoTab:CreateLabel("Welcome to Dawid Hub!")
-    InfoTab:CreateParagraph("This is a hub created using Fluent library.")
-    InfoTab:CreateButton("Click me!", function()
-        print("Button clicked!")
-    end)
-    
-    -- Tạo tab Setting
-    local SettingTab = Hub:CreateTab("Setting", "rbxassetid://0987654321")
-    
-    -- Thêm các thành phần vào tab Setting
-    SettingTab:CreateToggle("Toggle something", false, function(state)
-        print("Toggle state:", state)
-    end)
-    SettingTab:CreateSlider("Slider", 0, 100, 50, function(value)
-        print("Slider value:", value)
-    end)
-    SettingTab:CreateDropdown("Dropdown", {"Option 1", "Option 2", "Option 3"}, "Option 1", function(option)
-        print("Selected option:", option)
-    end)
+local Gui = {}
+
+function Gui:Setup(Window, Fluent)
+    -- Tạo các tab
+    local Tabs = {
+        Main = Window:AddTab({ Title = "Main", Icon = "home" }),
+        Scripts = Window:AddTab({ Title = "Scripts", Icon = "code" }),
+        Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
+    }
+
+    -- Tab Main
+    Tabs.Main:AddParagraph({
+        Title = "Welcome to RareXploit!",
+        Content = "Created by Rarechive. This script hub is designed for Delta Executor."
+    })
+
+    Tabs.Main:AddButton({
+        Title = "Test Notification",
+        Description = "Send a test notification",
+        Callback = function()
+            Fluent:Notify({
+                Title = "Test",
+                Content = "This is a test notification from RareXploit!",
+                Duration = 3
+            })
+        end
+    })
+
+    -- Tab Scripts
+    local scriptInput = Tabs.Scripts:AddTextbox({
+        Title = "Execute Custom Script",
+        Default = "",
+        Placeholder = "Paste your script here...",
+        Callback = function(value)
+            if Gui.OnExecute then
+                Gui.OnExecute(value)
+            else
+                Fluent:Notify({
+                    Title = "Error",
+                    Content = "Executor not initialized!",
+                    Duration = 5
+                })
+            end
+        end
+    })
+
+    Tabs.Scripts:AddButton({
+        Title = "Sample Script",
+        Description = "Run a sample ESP script",
+        Callback = function()
+            local sampleScript = [[
+                -- Sample ESP Script
+                local Players = game:GetService("Players")
+                for _, player in pairs(Players:GetPlayers()) do
+                    if player ~= Players.LocalPlayer then
+                        local highlight = Instance.new("Highlight")
+                        highlight.Parent = player.Character
+                        highlight.FillColor = Color3.fromRGB(255, 0, 0)
+                    end
+                end
+            ]]
+            if Gui.OnExecute then
+                Gui.OnExecute(sampleScript)
+            end
+        end
+    })
+
+    -- Tab Settings
+    local themeToggle = Tabs.Settings:AddToggle({
+        Title = "Acrylic Effect",
+        Default = true,
+        Callback = function(value)
+            Fluent.Options.Acrylic = value
+            Fluent:UpdateAcrylic()
+        end
+    })
+
+    Tabs.Settings:AddButton({
+        Title = "Destroy GUI",
+        Description = "Close the script hub",
+        Callback = function()
+            Window:Destroy()
+        end
+    })
+
+    -- Chọn tab mặc định
+    Window:SelectTab(1)
 end
+
+return Gui
