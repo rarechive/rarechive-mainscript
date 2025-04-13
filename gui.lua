@@ -5,7 +5,7 @@ function gui.CreateGUI(RareXploit)
         Title = "RareXploit " .. RareXploit.Version,
         SubTitle = "by Rarechive",
         TabWidth = 160,
-        Size = UDim2.fromOffset(500, 400), -- Adjusted for a more square rectangle
+        Size = UDim2.fromOffset(500, 400),
         Acrylic = true,
         Theme = "Dark",
         MinimizeKey = Enum.KeyCode.LeftControl
@@ -13,44 +13,44 @@ function gui.CreateGUI(RareXploit)
 
     local Tabs = {
         Main = Window:AddTab({ Title = "Main", Icon = "" }),
-        Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
+        Settings = Window:AddTab({ Title = "Settings", Icon = "settings" }),
+        Information = Window:AddTab({ Title = "Information", Icon = "info" })
     }
 
     local Options = RareXploit.Options
 
     -- Notification
     RareXploit:Notify({
-        Title = "Notification",
-        Content = "This is a notification",
-        SubContent = "SubContent",
+        Title = "Welcome",
+        Content = "RareXploit has loaded successfully!",
         Duration = 5
     })
 
-    -- Paragraph
+    -- Main Tab: Core Features
     Tabs.Main:AddParagraph({
-        Title = "Paragraph",
-        Content = "This is a paragraph.\nSecond line!"
+        Title = "Welcome to RareXploit",
+        Content = "Explore the features and configure your settings."
     })
 
     -- Button
     Tabs.Main:AddButton({
-        Title = "Button",
-        Description = "Very important button",
+        Title = "Execute Script",
+        Description = "Run your custom script",
         Callback = function()
             Window:Dialog({
-                Title = "Title",
-                Content = "This is a dialog",
+                Title = "Execute",
+                Content = "Are you sure you want to execute the script?",
                 Buttons = {
                     {
                         Title = "Confirm",
                         Callback = function()
-                            print("Confirmed the dialog.")
+                            print("Script executed.")
                         end
                     },
                     {
                         Title = "Cancel",
                         Callback = function()
-                            print("Cancelled the dialog.")
+                            print("Execution cancelled.")
                         end
                     }
                 }
@@ -59,128 +59,61 @@ function gui.CreateGUI(RareXploit)
     })
 
     -- Toggle
-    local Toggle = Tabs.Main:AddToggle("MyToggle", {Title = "Toggle", Default = false })
+    local Toggle = Tabs.Main:AddToggle("MyToggle", {
+        Title = "Enable Feature",
+        Default = false
+    })
     Toggle:OnChanged(function()
-        print("Toggle changed:", Options.MyToggle.Value)
+        print("Feature enabled:", Options.MyToggle.Value)
     end)
-    Options.MyToggle:SetValue(false)
 
     -- Slider
     local Slider = Tabs.Main:AddSlider("Slider", {
-        Title = "Slider",
-        Description = "This is a slider",
+        Title = "Speed Adjustment",
+        Description = "Adjust feature intensity",
         Default = 2,
         Min = 0,
         Max = 5,
         Rounding = 1,
         Callback = function(Value)
-            print("Slider was changed:", Value)
+            print("Speed set to:", Value)
         end
     })
-    Slider:OnChanged(function(Value)
-        print("Slider changed:", Value)
-    end)
-    Slider:SetValue(3)
-
-    -- Dropdown
-    local Dropdown = Tabs.Main:AddDropdown("Dropdown", {
-        Title = "Dropdown",
-        Values = {"one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen"},
-        Multi = false,
-        Default = 1,
-    })
-    Dropdown:SetValue("four")
-    Dropdown:OnChanged(function(Value)
-        print("Dropdown changed:", Value)
-    end)
-
-    -- MultiDropdown
-    local MultiDropdown = Tabs.Main:AddDropdown("MultiDropdown", {
-        Title = "Dropdown",
-        Description = "You can select multiple values.",
-        Values = {"one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen"},
-        Multi = true,
-        Default = {"seven", "twelve"},
-    })
-    MultiDropdown:SetValue({
-        three = true,
-        five = true,
-        seven = false
-    })
-    MultiDropdown:OnChanged(function(Value)
-        local Values = {}
-        for Value, State in next, Value do
-            table.insert(Values, Value)
-        end
-        print("Mutlidropdown changed:", table.concat(Values, ", "))
-    end)
-
-    -- Colorpicker
-    local Colorpicker = Tabs.Main:AddColorpicker("Colorpicker", {
-        Title = "Colorpicker",
-        Default = Color3.fromRGB(96, 205, 255)
-    })
-    Colorpicker:OnChanged(function()
-        print("Colorpicker changed:", Colorpicker.Value)
-    end)
-    Colorpicker:SetValueRGB(Color3.fromRGB(0, 255, 140))
-
-    -- Transparency Colorpicker
-    local TColorpicker = Tabs.Main:AddColorpicker("TransparencyColorpicker", {
-        Title = "Colorpicker",
-        Description = "but you can change the transparency.",
-        Transparency = 0,
-        Default = Color3.fromRGB(96, 205, 255)
-    })
-    TColorpicker:OnChanged(function()
-        print("TColorpicker changed:", TColorpicker.Value, "Transparency:", TColorpicker.Transparency)
-    end)
 
     -- Keybind
     local Keybind = Tabs.Main:AddKeybind("Keybind", {
-        Title = "KeyBind",
+        Title = "Quick Toggle",
         Mode = "Toggle",
         Default = "LeftControl",
         Callback = function(Value)
-            print("Keybind clicked!", Value)
-        end,
-        ChangedCallback = function(New)
-            print("Keybind changed!", New)
+            print("Keybind activated:", Value)
         end
     })
-    Keybind:OnClick(function()
-        print("Keybind clicked:", Keybind:GetState())
-    end)
-    Keybind:OnChanged(function()
-        print("Keybind changed:", Keybind.Value)
-    end)
 
-    task.spawn(function()
-        while true do
-            wait(1)
-            local state = Keybind:GetState()
-            if state then
-                print("Keybind is being held down")
-            end
-            if RareXploit.Unloaded then break end
-        end
-    end)
-    Keybind:SetValue("MB2", "Toggle")
+    -- Information Tab: Features
+    Tabs.Information:AddParagraph({
+        Title = "Feature Overview",
+        Content = "RareXploit offers powerful tools for scripting and automation.\nKey features include:\n- Script Execution\n- Customizable Keybinds\n- Adjustable Settings\n- Real-time Feedback"
+    })
 
-    -- Input
-    local Input = Tabs.Main:AddInput("Input", {
-        Title = "Input",
-        Default = "Default",
-        Placeholder = "Placeholder",
-        Numeric = false,
-        Finished = false,
-        Callback = function(Value)
-            print("Input changed:", Value)
+    Tabs.Information:AddButton({
+        Title = "Check Version",
+        Description = "View current RareXploit version",
+        Callback = function()
+            Window:Dialog({
+                Title = "Version Info",
+                Content = "RareXploit Version: " .. RareXploit.Version,
+                Buttons = {
+                    {
+                        Title = "OK",
+                        Callback = function()
+                            print("Version checked.")
+                        end
+                    }
+                }
+            })
         end
     })
-    Input:OnChanged(function()
-        print("Input updated:", Input.Value)
-    end)
 
     return Window, Tabs, Options
 end
