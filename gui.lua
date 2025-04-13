@@ -4,22 +4,26 @@ local Gui = {}
 function Gui:Init(Window, Fluent)
     local Options = Fluent.Options
 
+    -- Tạo các tab
     local Tabs = {
         Main = Window:AddTab({ Title = "Main", Icon = "home" }),
         Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
     }
 
+    -- Thông báo khởi động
     Fluent:Notify({
-        Title = "Welcome to RareXploit!",
-        Content = "Hub đã được tối ưu cho mobile với kích thước mới!",
+        Title = "Welcome!",
+        Content = "Mobile Hub đã được tải thành công!",
         Duration = 3
     })
 
+    -- Tab Main: Thêm các thành phần giao diện
     Tabs.Main:AddParagraph({
         Title = "Chào mừng bạn!",
-        Content = "Hub RareXploit với giao diện chữ nhật vừa màn hình."
+        Content = "Đây là hub tối ưu cho điện thoại."
     })
 
+    -- Button
     Tabs.Main:AddButton({
         Title = "Test Button",
         Description = "Nhấn để kiểm tra",
@@ -39,6 +43,7 @@ function Gui:Init(Window, Fluent)
         end
     })
 
+    -- Toggle
     local Toggle = Tabs.Main:AddToggle("MobileToggle", {
         Title = "Bật/Tắt Tính Năng",
         Default = false
@@ -46,8 +51,9 @@ function Gui:Init(Window, Fluent)
 
     Toggle:OnChanged(function()
         print("Toggle state:", Options.MobileToggle.Value)
-    })
+    end)
 
+    -- Slider
     local Slider = Tabs.Main:AddSlider("MobileSlider", {
         Title = "Điều chỉnh giá trị",
         Description = "Kéo để thay đổi",
@@ -60,6 +66,7 @@ function Gui:Init(Window, Fluent)
         end
     })
 
+    -- Tab Settings: Ví dụ cài đặt
     Tabs.Settings:AddButton({
         Title = "Reset Settings",
         Description = "Đặt lại tất cả cài đặt",
@@ -68,9 +75,10 @@ function Gui:Init(Window, Fluent)
         end
     })
 
+    -- Tối ưu giao diện cho mobile
     Tabs.Main:AddParagraph({
         Title = "Lưu ý",
-        Content = "Giao diện đã được căn giữa và tối ưu cho màn hình nhỏ."
+        Content = "Giao diện đã được tối ưu cho màn hình nhỏ."
     })
 end
 
