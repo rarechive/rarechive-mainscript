@@ -1,13 +1,7 @@
-local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
-local Window = Fluent:CreateWindow({
-    Title = "My Hack Hub",
-    SubTitle = "by rarechive",
-    TabWidth = 160,
-    Size = UDim2.fromOffset(580, 460),
-    Theme = "Dark",
-    Acrylic = true,
-    MinimizeKey = Enum.KeyCode.RightControl
-})
+local Gui = require(script.Parent.gui)
+local SpeedHack = require(script.Parent.speed_hack)
+
+local Window, Fluent = Gui:CreateHub()
 
 local Tabs = {
     Main = Window:AddTab({ Title = "Hacks", Icon = "home" })
@@ -28,14 +22,24 @@ Section:AddButton({
 })
 
 Section:AddToggle({
-    Title = "Toggle Hack",
-    Description = "Bật/tắt hack thử nghiệm",
+    Title = "Speed Hack",
+    Description = "Bật/tắt tăng tốc",
     Default = false,
     Callback = function(value)
-        Fluent:Notify({
-            Title = "Toggle Status",
-            Content = value and "Toggle ON" or "Toggle OFF",
-            Duration = 3
-        })
+        if value then
+            SpeedHack:Enable()
+            Fluent:Notify({
+                Title = "Speed Hack",
+                Content = "Speed ON",
+                Duration = 3
+            })
+        else
+            SpeedHack:Disable()
+            Fluent:Notify({
+                Title = "Speed Hack",
+                Content = "Speed OFF",
+                Duration = 3
+            })
+        end
     end
 })
