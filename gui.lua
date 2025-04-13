@@ -1,17 +1,85 @@
+-- gui.lua
 local Gui = {}
 
-function Gui:CreateHub()
-    local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
-    local Window = Fluent:CreateWindow({
-        Title = "My Hack Hub",
-        SubTitle = "by rarechive",
-        TabWidth = 160,
-        Size = UDim2.fromOffset(580, 460),
-        Theme = "Dark",
-        Acrylic = true,
-        MinimizeKey = Enum.KeyCode.RightControl
+function Gui:Init(Window, Fluent)
+    local Options = Fluent.Options
+
+    -- Tạo các tab
+    local Tabs = {
+        Main = Window:AddTab({ Title = "Main", Icon = "home" }),
+        Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
+    }
+
+    -- Thông báo khởi động
+    Fluent:Notify({
+        Title = "Welcome!",
+        Content = "Mobile Hub đã được tải thành công!",
+        Duration = 3
     })
-    return Window, Fluent
+
+    -- Tab Main: Thêm các thành phần giao diện
+    Tabs.Main:AddParagraph({
+        Title = "Chào mừng bạn!",
+        Content = "Đây là hub tối ưu cho điện thoại."
+    })
+
+    -- Button
+    Tabs.Main:AddButton({
+        Title = "Test Button",
+        Description = "Nhấn để kiểm tra",
+        Callback = function()
+            Window:Dialog({
+                Title = "Thông báo",
+                Content = "Bạn vừa nhấn nút!",
+                Buttons = {
+                    {
+                        Title = "OK",
+                        Callback = function()
+                            print("Đã nhấn OK")
+                        end
+                    }
+                }
+            })
+        end
+    })
+
+    -- Toggle
+    local Toggle = Tabs.Main:AddToggle("MobileToggle", {
+        Title = "Bật/Tắt Tính Năng",
+        Default = false
+    })
+
+    Toggle:OnChanged(function()
+        print("Toggle state:", Options.MobileToggle.Value)
+    end)
+
+    -- Slider
+    local Slider = Tabs.Main:AddSlider("MobileSlider", {
+        Title = "Điều chỉnh giá trị",
+        Description = "Kéo để thay đổi",
+        Default = 50,
+        Min = 0,
+        Max = 100,
+        Rounding = 0,
+        Callback = function(Value)
+            print("Slider value:", Value)
+        end
+    })
+
+    -- Tab Settings: Ví dụ cài đặt
+    Tabs.Settings:AddButton({
+        Title = "Reset Settings",
+        Description = "Đặt lại tất cả cài đặt",
+        Callback = function()
+            print("Đã reset cài đặt")
+        end
+    })
+
+    -- Tối ưu giao diện cho mobile
+    Tabs.Main:AddParagraph({
+        Title = "Lưu ý",
+        Content = "Giao diện đã được tối ưu cho màn hình nhỏ."
+    })
 end
 
 return Gui
