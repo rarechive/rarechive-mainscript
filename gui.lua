@@ -11,6 +11,7 @@ function gui.CreateGUI(RareXploit)
         MinimizeKey = Enum.KeyCode.LeftControl
     })
 
+    -- Khởi tạo các tab
     local Tabs = {
         Main = Window:AddTab({ Title = "Main", Icon = "home" }),
         Settings = Window:AddTab({ Title = "Settings", Icon = "settings" }),
@@ -19,113 +20,110 @@ function gui.CreateGUI(RareXploit)
 
     local Options = RareXploit.Options
 
-    -- Notification
+    -- Thông báo
     RareXploit:Notify({
         Title = "Welcome",
-        Content = "RareXploit has loaded successfully!",
+        Content = "RareXploit đã tải thành công!",
         Duration = 5
     })
 
-    -- Main Tab: Only Welcome Paragraph
+    -- Tab Main: Chỉ có Welcome
     Tabs.Main:AddParagraph({
-        Title = "Welcome to RareXploit",
-        Content = "Explore the features and configure your settings."
+        Title = "Chào mừng đến với RareXploit",
+        Content = "Khám phá các tính năng và tùy chỉnh cài đặt của bạn."
     })
 
-    -- Create a Scrolling Frame for additional features
+    -- Tạo ScrollingFrame cho các tính năng bổ sung
     local ScrollingFrame = Tabs.Main:AddScrollingFrame({
-        Size = UDim2.new(1, -10, 0.4, 0), -- Adjusted to leave padding and limit height
-        Position = UDim2.new(0, 5, 0.3, 0), -- Positioned below Welcome with offset
+        Size = UDim2.new(0.95, 0, 0.35, 0), -- Giới hạn kích thước, để lại lề
+        Position = UDim2.new(0.025, 0, 0.25, 0), -- Đặt dưới Welcome, có lề
         ScrollBarThickness = 4,
-        CanvasSize = UDim2.new(0, 0, 2, 0), -- Adjustable based on content
-        Visible = false, -- Initially hidden
-        BottomImage = "", -- Prevents overflow visual
-        TopImage = "",
-        MidImage = ""
+        CanvasSize = UDim2.new(0, 0, 1.5, 0), -- Kéo xuống cho nội dung
+        Visible = false -- Ẩn mặc định
     })
 
-    -- Toggle Button to show/hide Scrolling Frame
+    -- Nút bật/tắt ScrollingFrame
     Tabs.Main:AddButton({
-        Title = "Show More Features",
+        Title = "Xem thêm tính năng",
         Callback = function()
             ScrollingFrame.Visible = not ScrollingFrame.Visible
         end
     })
 
-    -- Add features to Scrolling Frame
+    -- Thêm nội dung vào ScrollingFrame
     ScrollingFrame:AddButton({
-        Title = "Execute Script",
-        Description = "Run your custom script",
+        Title = "Thực thi Script",
+        Description = "Chạy script tùy chỉnh",
         Callback = function()
             Window:Dialog({
-                Title = "Execute",
-                Content = "Are you sure you want to execute the script?",
+                Title = "Thực thi",
+                Content = "Bạn có chắc muốn chạy script không?",
                 Buttons = {
-                    { Title = "Confirm", Callback = function() print("Script executed.") end },
-                    { Title = "Cancel", Callback = function() print("Execution cancelled.") end }
+                    { Title = "Xác nhận", Callback = function() print("Đã chạy script.") end },
+                    { Title = "Hủy", Callback = function() print("Đã hủy.") end }
                 }
             })
         end
     })
 
     local Toggle = ScrollingFrame:AddToggle("MyToggle", {
-        Title = "Enable Feature",
+        Title = "Bật tính năng",
         Default = false
     })
     Toggle:OnChanged(function()
-        print("Feature enabled:", Options.MyToggle.Value)
+        print("Tính năng bật:", Options.MyToggle.Value)
     end)
 
     local Slider = ScrollingFrame:AddSlider("Slider", {
-        Title = "Speed Adjustment",
-        Description = "Adjust feature intensity",
+        Title = "Điều chỉnh tốc độ",
+        Description = "Điều chỉnh cường độ tính năng",
         Default = 2,
         Min = 0,
         Max = 5,
         Rounding = 1,
         Callback = function(Value)
-            print("Speed set to:", Value)
+            print("Tốc độ:", Value)
         end
     })
 
     local Keybind = ScrollingFrame:AddKeybind("Keybind", {
-        Title = "Quick Toggle",
+        Title = "Phím tắt",
         Mode = "Toggle",
         Default = "LeftControl",
         Callback = function(Value)
-            print("Keybind activated:", Value)
+            print("Phím tắt kích hoạt:", Value)
         end
     })
 
-    -- Settings Tab: Restored
+    -- Tab Settings: Khôi phục
     Tabs.Settings:AddParagraph({
-        Title = "Settings",
-        Content = "Configure your RareXploit preferences."
+        Title = "Cài đặt",
+        Content = "Tùy chỉnh các thiết lập cho RareXploit."
     })
 
     Tabs.Settings:AddToggle("AutoExecute", {
-        Title = "Auto Execute Scripts",
+        Title = "Tự động chạy Script",
         Default = false,
         Callback = function(Value)
-            print("Auto Execute:", Value)
+            print("Tự động chạy:", Value)
         end
     })
 
-    -- Information Tab: Restored
+    -- Tab Information: Khôi phục
     Tabs.Information:AddParagraph({
-        Title = "Feature Overview",
-        Content = "RareXploit offers powerful tools for scripting and automation.\nKey features include:\n- Script Execution\n- Customizable Keybinds\n- Adjustable Settings\n- Real-time Feedback"
+        Title = "Tổng quan tính năng",
+        Content = "RareXploit cung cấp công cụ mạnh mẽ cho scripting và tự động hóa.\nCác tính năng chính:\n- Thực thi Script\n- Phím tắt tùy chỉnh\n- Cài đặt điều chỉnh\n- Phản hồi thời gian thực"
     })
 
     Tabs.Information:AddButton({
-        Title = "Check Version",
-        Description = "View current RareXploit version",
+        Title = "Kiểm tra phiên bản",
+        Description = "Xem phiên bản hiện tại của RareXploit",
         Callback = function()
             Window:Dialog({
-                Title = "Version Info",
-                Content = "RareXploit Version: 0.1",
+                Title = "Thông tin phiên bản",
+                Content = "Phiên bản RareXploit: 0.1",
                 Buttons = {
-                    { Title = "OK", Callback = function() print("Version checked.") end }
+                    { Title = "OK", Callback = function() print("Đã kiểm tra phiên bản.") end }
                 }
             })
         end
