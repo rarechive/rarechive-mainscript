@@ -1,55 +1,64 @@
--- RareXploit Hub by Rarechive
--- Main logic for the hub
-
+-- RareXploit Main Script by Rarechive
 local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
-local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
-local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
+local Players = game:GetService("Players")
+local Player = Players.LocalPlayer
 
--- Load GUI configuration
-loadstring(game:HttpGet("https://raw.githubusercontent.com/rarechive/rarechive-mainscript/refs/heads/main/gui.lua"))()
-
--- Initialize the window
+-- Initialize Window
 local Window = Fluent:CreateWindow({
     Title = "RareXploit",
     SubTitle = "by Rarechive",
-    TabWidth = 160,
-    Size = UDim2.fromOffset(480, 320), -- Optimized for mobile (80% width, 70% height)
-    Acrylic = true,
-    Theme = "Dark",
-    MinimizeKey = Enum.KeyCode.LeftControl
+    Size = UDim2.new(0, 400, 0, 300) -- Rectangle size for mobile
 })
 
--- Example tabs
+-- Tabs
 local Tabs = {
-    Main = Window:AddTab({ Title = "Main", Icon = "home" }),
-    Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
+    Information = Window:AddTab({ Title = "Information", Icon = "info" }),
+    Setting = Window:AddTab({ Title = "Setting", Icon = "settings" })
 }
 
--- Example button in Main tab
-Tabs.Main:AddButton({
-    Title = "Test Button",
-    Description = "This is a test button for RareXploit",
+-- Information Tab
+Tabs.Information:AddParagraph({
+    Title = "Welcome to RareXploit!",
+    Content = "Created by Rarechive. This hub is designed for efficiency and ease of use on mobile devices."
+})
+
+Tabs.Information:AddButton({
+    Title = "Join Discord",
+    Description = "Join our community for updates!",
     Callback = function()
-        Fluent:Notify({
-            Title = "RareXploit",
-            Content = "Button clicked! Hub by Rarechive.",
-            Duration = 3
-        })
+        setclipboard("https://discord.gg/your-discord")
+        Fluent:Notify({ Title = "Copied!", Content = "Discord link copied to clipboard." })
     end
 })
 
--- Initialize SaveManager and InterfaceManager
-SaveManager:Initialize({
-    FolderName = "RareXploitConfig",
-    FileName = "Settings"
+-- Setting Tab
+Tabs.Setting:AddToggle({
+    Title = "Auto Save Config",
+    Default = true,
+    Callback = function(value)
+        Fluent.Options.AutoSaveConfig = value
+    end
 })
 
-InterfaceManager:Initialize()
-SaveManager:BuildInterface(Tabs.Settings)
+Tabs.Setting:AddButton({
+    Title = "Destroy UI",
+    Callback = function()
+        Fluent:Destroy()
+    end
+})
 
--- Notify hub loaded
+-- Center UI
+local ScreenGui = Player.PlayerGui:FindFirstChild("FluentGui") or Fluent.ScreenGui
+ScreenGui.DisplayOrder = 999
+ScreenGui.IgnoreGuiInset = true
+ScreenGui.ResetOnSpawn = false
+
+local Frame = ScreenGui:FindFirstChild("Main") or ScreenGui.Frame
+Frame.Position = UDim2.new(0.5, -200, 0.5, -150) -- Center with offset for 400x300 size
+
+-- Notify on Load
 Fluent:Notify({
-    Title = "RareXploit",
-    Content = "Hub loaded successfully! Created by Rarechive.",
+    Title = "RareXploit Loaded",
+    Content = "Hub is ready! Enjoy exploiting.",
     Duration = 5
 })
