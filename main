@@ -1,1 +1,9 @@
+-- main.lua
+local Gui = require(script.Parent.gui) -- Giả định gui.lua cùng thư mục
+local Window = Gui:CreateMainWindow()
 
+local Tab1 = Window:NewTab("Hacks")
+local Section1 = Tab1:NewSection("Controls")
+Section1:NewButton("Test Hack", "Chạy thử", function()
+    print("Hack activated!")
+end)
