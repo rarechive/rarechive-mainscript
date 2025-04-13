@@ -3,7 +3,7 @@
 local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
 
 -- Load file gui.lua
-local Gui = loadstring(game:HttpGet("URL_CUA_GUI_LUA"))() -- Thay bằng URL thực tế của gui.lua trên GitHub
+local Gui = loadstring(game:HttpGet("https://raw.githubusercontent.com/rarechive/rarechive-mainscript/refs/heads/main/gui.lua"))() -- Thay bằng URL thực tế của gui.lua trên GitHub
 
 -- Cấu hình cửa sổ chính
 local Window = Fluent:CreateWindow({
