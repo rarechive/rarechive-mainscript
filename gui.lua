@@ -2,7 +2,7 @@ local gui = {}
 
 function gui.CreateGUI(RareXploit)
     local Window = RareXploit:CreateWindow({
-        Title = "RareXploit " .. RareXploit.Version,
+        Title = "RareXploit 0.1",
         SubTitle = "by Rarechive",
         TabWidth = 160,
         Size = UDim2.fromOffset(500, 400),
@@ -12,7 +12,7 @@ function gui.CreateGUI(RareXploit)
     })
 
     local Tabs = {
-        Main = Window:AddTab({ Title = "Main", Icon = "" }),
+        Main = Window:AddTab({ Title = "Main", Icon = "home" }), -- Thêm logo căn nhà
         Settings = Window:AddTab({ Title = "Settings", Icon = "settings" }),
         Information = Window:AddTab({ Title = "Information", Icon = "info" })
     }
@@ -102,7 +102,7 @@ function gui.CreateGUI(RareXploit)
         Callback = function()
             Window:Dialog({
                 Title = "Version Info",
-                Content = "RareXploit Version: " .. RareXploit.Version,
+                Content = "RareXploit Version: 0.1",
                 Buttons = {
                     {
                         Title = "OK",
