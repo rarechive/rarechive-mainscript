@@ -34,11 +34,14 @@ function gui.CreateGUI(RareXploit)
 
     -- Create a Scrolling Frame for additional features
     local ScrollingFrame = Tabs.Main:AddScrollingFrame({
-        Size = UDim2.new(1, 0, 0.5, 0),
-        Position = UDim2.new(0, 0, 0.5, 0),
+        Size = UDim2.new(1, -10, 0.4, 0), -- Adjusted to leave padding and limit height
+        Position = UDim2.new(0, 5, 0.3, 0), -- Positioned below Welcome with offset
         ScrollBarThickness = 4,
         CanvasSize = UDim2.new(0, 0, 2, 0), -- Adjustable based on content
-        Visible = false -- Initially hidden
+        Visible = false, -- Initially hidden
+        BottomImage = "", -- Prevents overflow visual
+        TopImage = "",
+        MidImage = ""
     })
 
     -- Toggle Button to show/hide Scrolling Frame
@@ -94,7 +97,21 @@ function gui.CreateGUI(RareXploit)
         end
     })
 
-    -- Information Tab: Features
+    -- Settings Tab: Restored
+    Tabs.Settings:AddParagraph({
+        Title = "Settings",
+        Content = "Configure your RareXploit preferences."
+    })
+
+    Tabs.Settings:AddToggle("AutoExecute", {
+        Title = "Auto Execute Scripts",
+        Default = false,
+        Callback = function(Value)
+            print("Auto Execute:", Value)
+        end
+    })
+
+    -- Information Tab: Restored
     Tabs.Information:AddParagraph({
         Title = "Feature Overview",
         Content = "RareXploit offers powerful tools for scripting and automation.\nKey features include:\n- Script Execution\n- Customizable Keybinds\n- Adjustable Settings\n- Real-time Feedback"
