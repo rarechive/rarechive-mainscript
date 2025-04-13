@@ -19,12 +19,6 @@ local Window = Fluent:CreateWindow({
     MinimizeKey = Enum.KeyCode.LeftControl
 })
 
--- Center the window on mobile screen
-Window:GetPropertyChangedSignal("Size"):Connect(function()
-    local screenSize = game:GetService("GuiService"):GetScreenResolution()
-    Window.Position = UDim2.new(0.5, -Window.Size.X.Offset / 2, 0.5, -Window.Size.Y.Offset / 2)
-end)
-
 -- Example tabs
 local Tabs = {
     Main = Window:AddTab({ Title = "Main", Icon = "home" }),
