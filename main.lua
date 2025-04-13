@@ -13,4 +13,4 @@ local Hub = Fluent:CreateHub({
 })
 
 -- Tải file gui
-loadstring(game:HttpGet("https://raw.githubusercontent.com/yourusername/yourrepo/main/gui.lua"))()(Hub)
+loadstring(game:HttpGet("loadstring(game:HttpGet("https://raw.githubusercontent.com/rarechive/rarechive-mainscript/refs/heads/main/gui.lua"))()"))()(Hub)
