@@ -4,7 +4,7 @@ local windowWidth = math.min(400, screenSize.X * 0.8)
 local windowHeight = math.min(300, screenSize.Y * 0.8)
 
 -- Tải thư viện Fluent
-local Fluent = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Fluent.lua"))()
+local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
 
 -- Tạo cửa sổ chính
 local Window = Fluent:CreateWindow({
