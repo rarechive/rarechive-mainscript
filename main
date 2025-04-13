@@ -1,6 +1,5 @@
--- main.lua
-local Gui = require(script.Parent.gui) -- Giả định gui.lua cùng thư mục
-local Window = Gui:CreateMainWindow()
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
+local Window = Library.CreateLib("My Hack Hub", "DarkTheme")
 
 local Tab1 = Window:NewTab("Hacks")
 local Section1 = Tab1:NewSection("Controls")
