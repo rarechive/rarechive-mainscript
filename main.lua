@@ -1,50 +1,29 @@
--- RareXploit Main Script
--- Created by Rarechive
--- Compatible with Delta Executor
-
--- Kiểm tra nếu đang chạy trên Delta Executor
-
--- Tải thư viện Fluent
+-- main.lua
 local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
+local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
+local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
 
--- Tải giao diện từ gui.lua
-local Gui = loadstring(game:HttpGet("loadstring(game:HttpGet("https://raw.githubusercontent.com/rarechive/rarechive-mainscript/refs/heads/main/gui.lua"))()"))() -- Thay URL_TO_YOUR_GUI_LUA_FILE bằng URL của file gui.lua trên GitHub hoặc server của bạn
+-- Initialize SaveManager and InterfaceManager
+SaveManager:SetLibrary(Fluent)
+InterfaceManager:SetLibrary(Fluent)
 
--- Khởi tạo cửa sổ chính
-local Window = Fluent:CreateWindow({
-    Title = "RareXploit | Created by Rarechive",
-    SubTitle = "Delta Executor Compatible",
-    TabWidth = 160,
-    Size = UDim2.new(0, 580, 0, 350),
-    Theme = "Dark",
-    Acrylic = true,
-    MinimizeKey = Enum.KeyCode.LeftControl
-})
+-- Ignore theme settings for saving
+SaveManager:IgnoreThemeSettings()
+SaveManager:SetIgnoreIndexes({})
 
--- Gọi hàm khởi tạo giao diện từ gui.lua
-Gui:Setup(Window, Fluent)
+-- Set folder structure for configs
+InterfaceManager:SetFolder("RareXploit")
+SaveManager:SetFolder("RareXploit/specific-game")
 
--- Thông báo khởi động thành công
+-- Load GUI from gui.lua
+local gui = loadstring(game:HttpGet("loadstring(game:HttpGet("https://raw.githubusercontent.com/rarechive/rarechive-mainscript/refs/heads/main/gui.lua"))()"))()
+
+-- Load autoload config
+SaveManager:LoadAutoloadConfig()
+
+-- Notify script loaded
 Fluent:Notify({
     Title = "RareXploit",
-    Content = "Script hub loaded successfully! Enjoy exploiting.",
-    Duration = 5
+    Content = "The script has been loaded.",
+    Duration = 8
 })
-
--- Ví dụ hàm executor (có thể mở rộng)
-local function executeScript(script)
-    local success, err = pcall(function()
-        loadstring(script)()
-    end)
-    if not success then
-        Fluent:Notify({
-            Title = "Execution Error",
-            Content = "Error: " .. tostring(err),
-            Duration = 8
-        })
-    end
-end
-
--- Xử lý logic chính nếu cần
--- Ví dụ: Kết nối các sự kiện từ giao diện
-Gui.OnExecute = executeScript
