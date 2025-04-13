@@ -12,7 +12,7 @@ function gui.CreateGUI(RareXploit)
     })
 
     local Tabs = {
-        Main = Window:AddTab({ Title = "Main", Icon = "home" }), -- Thêm logo căn nhà
+        Main = Window:AddTab({ Title = "Main", Icon = "home" }),
         Settings = Window:AddTab({ Title = "Settings", Icon = "settings" }),
         Information = Window:AddTab({ Title = "Information", Icon = "info" })
     }
@@ -26,14 +26,31 @@ function gui.CreateGUI(RareXploit)
         Duration = 5
     })
 
-    -- Main Tab: Core Features
+    -- Main Tab: Only Welcome Paragraph
     Tabs.Main:AddParagraph({
         Title = "Welcome to RareXploit",
         Content = "Explore the features and configure your settings."
     })
 
-    -- Button
+    -- Create a Scrolling Frame for additional features
+    local ScrollingFrame = Tabs.Main:AddScrollingFrame({
+        Size = UDim2.new(1, 0, 0.5, 0),
+        Position = UDim2.new(0, 0, 0.5, 0),
+        ScrollBarThickness = 4,
+        CanvasSize = UDim2.new(0, 0, 2, 0), -- Adjustable based on content
+        Visible = false -- Initially hidden
+    })
+
+    -- Toggle Button to show/hide Scrolling Frame
     Tabs.Main:AddButton({
+        Title = "Show More Features",
+        Callback = function()
+            ScrollingFrame.Visible = not ScrollingFrame.Visible
+        end
+    })
+
+    -- Add features to Scrolling Frame
+    ScrollingFrame:AddButton({
         Title = "Execute Script",
         Description = "Run your custom script",
         Callback = function()
@@ -41,25 +58,14 @@ function gui.CreateGUI(RareXploit)
                 Title = "Execute",
                 Content = "Are you sure you want to execute the script?",
                 Buttons = {
-                    {
-                        Title = "Confirm",
-                        Callback = function()
-                            print("Script executed.")
-                        end
-                    },
-                    {
-                        Title = "Cancel",
-                        Callback = function()
-                            print("Execution cancelled.")
-                        end
-                    }
+                    { Title = "Confirm", Callback = function() print("Script executed.") end },
+                    { Title = "Cancel", Callback = function() print("Execution cancelled.") end }
                 }
             })
         end
     })
 
-    -- Toggle
-    local Toggle = Tabs.Main:AddToggle("MyToggle", {
+    local Toggle = ScrollingFrame:AddToggle("MyToggle", {
         Title = "Enable Feature",
         Default = false
     })
@@ -67,8 +73,7 @@ function gui.CreateGUI(RareXploit)
         print("Feature enabled:", Options.MyToggle.Value)
     end)
 
-    -- Slider
-    local Slider = Tabs.Main:AddSlider("Slider", {
+    local Slider = ScrollingFrame:AddSlider("Slider", {
         Title = "Speed Adjustment",
         Description = "Adjust feature intensity",
         Default = 2,
@@ -80,8 +85,7 @@ function gui.CreateGUI(RareXploit)
         end
     })
 
-    -- Keybind
-    local Keybind = Tabs.Main:AddKeybind("Keybind", {
+    local Keybind = ScrollingFrame:AddKeybind("Keybind", {
         Title = "Quick Toggle",
         Mode = "Toggle",
         Default = "LeftControl",
@@ -104,12 +108,7 @@ function gui.CreateGUI(RareXploit)
                 Title = "Version Info",
                 Content = "RareXploit Version: 0.1",
                 Buttons = {
-                    {
-                        Title = "OK",
-                        Callback = function()
-                            print("Version checked.")
-                        end
-                    }
+                    { Title = "OK", Callback = function() print("Version checked.") end }
                 }
             })
         end
