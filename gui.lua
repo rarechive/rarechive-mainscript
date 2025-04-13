@@ -1,11 +1,11 @@
 local gui = {}
 
-function gui.CreateGUI(Fluent)
-    local Window = Fluent:CreateWindow({
-        Title = "Fluent " .. Fluent.Version,
-        SubTitle = "by dawid",
+function gui.CreateGUI(RareXploit)
+    local Window = RareXploit:CreateWindow({
+        Title = "RareXploit " .. RareXploit.Version,
+        SubTitle = "by Rarechive",
         TabWidth = 160,
-        Size = UDim2.fromOffset(580, 460),
+        Size = UDim2.fromOffset(500, 400), -- Adjusted for a more square rectangle
         Acrylic = true,
         Theme = "Dark",
         MinimizeKey = Enum.KeyCode.LeftControl
@@ -16,10 +16,10 @@ function gui.CreateGUI(Fluent)
         Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
     }
 
-    local Options = Fluent.Options
+    local Options = RareXploit.Options
 
     -- Notification
-    Fluent:Notify({
+    RareXploit:Notify({
         Title = "Notification",
         Content = "This is a notification",
         SubContent = "SubContent",
@@ -162,7 +162,7 @@ function gui.CreateGUI(Fluent)
             if state then
                 print("Keybind is being held down")
             end
-            if Fluent.Unloaded then break end
+            if RareXploit.Unloaded then break end
         end
     end)
     Keybind:SetValue("MB2", "Toggle")
