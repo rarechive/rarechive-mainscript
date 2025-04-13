@@ -1,55 +1,56 @@
--- gui.lua
-local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
+local gui = {}
 
-local Window = Fluent:CreateWindow({
-    Title = "RareXploit " .. Fluent.Version,
-    SubTitle = "by Rarechive",
-    TabWidth = 140, -- Slightly smaller tab width
-    Size = UDim2.fromOffset(500, 400), -- Smaller size to fit most screens
-    Acrylic = true,
-    Theme = "Dark",
-    MinimizeKey = Enum.KeyCode.LeftControl
-})
+function gui.CreateGUI(Fluent)
+    local Window = Fluent:CreateWindow({
+        Title = "Fluent " .. Fluent.Version,
+        SubTitle = "by dawid",
+        TabWidth = 160,
+        Size = UDim2.fromOffset(580, 460),
+        Acrylic = true,
+        Theme = "Dark",
+        MinimizeKey = Enum.KeyCode.LeftControl
+    })
 
--- Tabs
-local Tabs = {
-    Main = Window:AddTab({ Title = "Main", Icon = "" }),
-    Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
-}
+    local Tabs = {
+        Main = Window:AddTab({ Title = "Main", Icon = "" }),
+        Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
+    }
 
-local Options = Fluent.Options
+    local Options = Fluent.Options
 
--- GUI Elements
-do
+    -- Notification
     Fluent:Notify({
         Title = "Notification",
-        Content = "Welcome to RareXploit!",
+        Content = "This is a notification",
+        SubContent = "SubContent",
         Duration = 5
     })
 
+    -- Paragraph
     Tabs.Main:AddParagraph({
-        Title = "Welcome",
-        Content = "This is the RareXploit hub.\nEnjoy the features!"
+        Title = "Paragraph",
+        Content = "This is a paragraph.\nSecond line!"
     })
 
+    -- Button
     Tabs.Main:AddButton({
         Title = "Button",
-        Description = "Click for action",
+        Description = "Very important button",
         Callback = function()
             Window:Dialog({
-                Title = "Action",
-                Content = "Confirm your action?",
+                Title = "Title",
+                Content = "This is a dialog",
                 Buttons = {
                     {
                         Title = "Confirm",
                         Callback = function()
-                            print("Action confirmed.")
+                            print("Confirmed the dialog.")
                         end
                     },
                     {
                         Title = "Cancel",
                         Callback = function()
-                            print("Action cancelled.")
+                            print("Cancelled the dialog.")
                         end
                     }
                 }
@@ -57,28 +58,34 @@ do
         end
     })
 
+    -- Toggle
     local Toggle = Tabs.Main:AddToggle("MyToggle", {Title = "Toggle", Default = false })
     Toggle:OnChanged(function()
         print("Toggle changed:", Options.MyToggle.Value)
     end)
     Options.MyToggle:SetValue(false)
 
+    -- Slider
     local Slider = Tabs.Main:AddSlider("Slider", {
         Title = "Slider",
-        Description = "Adjust value",
+        Description = "This is a slider",
         Default = 2,
         Min = 0,
         Max = 5,
         Rounding = 1,
         Callback = function(Value)
-            print("Slider changed:", Value)
+            print("Slider was changed:", Value)
         end
     })
+    Slider:OnChanged(function(Value)
+        print("Slider changed:", Value)
+    end)
     Slider:SetValue(3)
 
+    -- Dropdown
     local Dropdown = Tabs.Main:AddDropdown("Dropdown", {
         Title = "Dropdown",
-        Values = {"one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"},
+        Values = {"one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen"},
         Multi = false,
         Default = 1,
     })
@@ -87,22 +94,28 @@ do
         print("Dropdown changed:", Value)
     end)
 
+    -- MultiDropdown
     local MultiDropdown = Tabs.Main:AddDropdown("MultiDropdown", {
-        Title = "Multi Dropdown",
-        Description = "Select multiple options",
-        Values = {"one", "two", "three", "four", "five"},
+        Title = "Dropdown",
+        Description = "You can select multiple values.",
+        Values = {"one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen"},
         Multi = true,
-        Default = {"two", "four"},
+        Default = {"seven", "twelve"},
     })
-    MultiDropdown:SetValue({three = true, five = true})
+    MultiDropdown:SetValue({
+        three = true,
+        five = true,
+        seven = false
+    })
     MultiDropdown:OnChanged(function(Value)
         local Values = {}
         for Value, State in next, Value do
             table.insert(Values, Value)
         end
-        print("MultiDropdown changed:", table.concat(Values, ", "))
+        print("Mutlidropdown changed:", table.concat(Values, ", "))
     end)
 
+    -- Colorpicker
     local Colorpicker = Tabs.Main:AddColorpicker("Colorpicker", {
         Title = "Colorpicker",
         Default = Color3.fromRGB(96, 205, 255)
@@ -112,9 +125,10 @@ do
     end)
     Colorpicker:SetValueRGB(Color3.fromRGB(0, 255, 140))
 
+    -- Transparency Colorpicker
     local TColorpicker = Tabs.Main:AddColorpicker("TransparencyColorpicker", {
-        Title = "Transparency Colorpicker",
-        Description = "Adjust color and transparency",
+        Title = "Colorpicker",
+        Description = "but you can change the transparency.",
         Transparency = 0,
         Default = Color3.fromRGB(96, 205, 255)
     })
@@ -122,8 +136,9 @@ do
         print("TColorpicker changed:", TColorpicker.Value, "Transparency:", TColorpicker.Transparency)
     end)
 
+    -- Keybind
     local Keybind = Tabs.Main:AddKeybind("Keybind", {
-        Title = "Keybind",
+        Title = "KeyBind",
         Mode = "Toggle",
         Default = "LeftControl",
         Callback = function(Value)
@@ -152,10 +167,11 @@ do
     end)
     Keybind:SetValue("MB2", "Toggle")
 
+    -- Input
     local Input = Tabs.Main:AddInput("Input", {
         Title = "Input",
         Default = "Default",
-        Placeholder = "Enter text",
+        Placeholder = "Placeholder",
         Numeric = false,
         Finished = false,
         Callback = function(Value)
@@ -165,13 +181,8 @@ do
     Input:OnChanged(function()
         print("Input updated:", Input.Value)
     end)
+
+    return Window, Tabs, Options
 end
 
--- Build Settings Tab
-SaveManager:BuildConfigSection(Tabs.Settings)
-InterfaceManager:BuildInterfaceSection(Tabs.Settings)
-
--- Select Main Tab
-Window:SelectTab(1)
-
-return Fluent
+return gui
