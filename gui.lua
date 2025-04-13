@@ -1,94 +1,177 @@
--- RareXploit GUI Script
--- Created by Rarechive
--- Uses Fluent Library by dawid
+-- gui.lua
+local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
 
-local Gui = {}
+local Window = Fluent:CreateWindow({
+    Title = "RareXploit " .. Fluent.Version,
+    SubTitle = "by Rarechive",
+    TabWidth = 140, -- Slightly smaller tab width
+    Size = UDim2.fromOffset(500, 400), -- Smaller size to fit most screens
+    Acrylic = true,
+    Theme = "Dark",
+    MinimizeKey = Enum.KeyCode.LeftControl
+})
 
-function Gui:Setup(Window, Fluent)
-    -- Tạo các tab
-    local Tabs = {
-        Main = Window:AddTab({ Title = "Main", Icon = "home" }),
-        Scripts = Window:AddTab({ Title = "Scripts", Icon = "code" }),
-        Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
-    }
+-- Tabs
+local Tabs = {
+    Main = Window:AddTab({ Title = "Main", Icon = "" }),
+    Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
+}
 
-    -- Tab Main
+local Options = Fluent.Options
+
+-- GUI Elements
+do
+    Fluent:Notify({
+        Title = "Notification",
+        Content = "Welcome to RareXploit!",
+        Duration = 5
+    })
+
     Tabs.Main:AddParagraph({
-        Title = "Welcome to RareXploit!",
-        Content = "Created by Rarechive. This script hub is designed for Delta Executor."
+        Title = "Welcome",
+        Content = "This is the RareXploit hub.\nEnjoy the features!"
     })
 
     Tabs.Main:AddButton({
-        Title = "Test Notification",
-        Description = "Send a test notification",
+        Title = "Button",
+        Description = "Click for action",
         Callback = function()
-            Fluent:Notify({
-                Title = "Test",
-                Content = "This is a test notification from RareXploit!",
-                Duration = 3
+            Window:Dialog({
+                Title = "Action",
+                Content = "Confirm your action?",
+                Buttons = {
+                    {
+                        Title = "Confirm",
+                        Callback = function()
+                            print("Action confirmed.")
+                        end
+                    },
+                    {
+                        Title = "Cancel",
+                        Callback = function()
+                            print("Action cancelled.")
+                        end
+                    }
+                }
             })
         end
     })
 
-    -- Tab Scripts
-    local scriptInput = Tabs.Scripts:AddTextbox({
-        Title = "Execute Custom Script",
-        Default = "",
-        Placeholder = "Paste your script here...",
-        Callback = function(value)
-            if Gui.OnExecute then
-                Gui.OnExecute(value)
-            else
-                Fluent:Notify({
-                    Title = "Error",
-                    Content = "Executor not initialized!",
-                    Duration = 5
-                })
+    local Toggle = Tabs.Main:AddToggle("MyToggle", {Title = "Toggle", Default = false })
+    Toggle:OnChanged(function()
+        print("Toggle changed:", Options.MyToggle.Value)
+    end)
+    Options.MyToggle:SetValue(false)
+
+    local Slider = Tabs.Main:AddSlider("Slider", {
+        Title = "Slider",
+        Description = "Adjust value",
+        Default = 2,
+        Min = 0,
+        Max = 5,
+        Rounding = 1,
+        Callback = function(Value)
+            print("Slider changed:", Value)
+        end
+    })
+    Slider:SetValue(3)
+
+    local Dropdown = Tabs.Main:AddDropdown("Dropdown", {
+        Title = "Dropdown",
+        Values = {"one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"},
+        Multi = false,
+        Default = 1,
+    })
+    Dropdown:SetValue("four")
+    Dropdown:OnChanged(function(Value)
+        print("Dropdown changed:", Value)
+    end)
+
+    local MultiDropdown = Tabs.Main:AddDropdown("MultiDropdown", {
+        Title = "Multi Dropdown",
+        Description = "Select multiple options",
+        Values = {"one", "two", "three", "four", "five"},
+        Multi = true,
+        Default = {"two", "four"},
+    })
+    MultiDropdown:SetValue({three = true, five = true})
+    MultiDropdown:OnChanged(function(Value)
+        local Values = {}
+        for Value, State in next, Value do
+            table.insert(Values, Value)
+        end
+        print("MultiDropdown changed:", table.concat(Values, ", "))
+    end)
+
+    local Colorpicker = Tabs.Main:AddColorpicker("Colorpicker", {
+        Title = "Colorpicker",
+        Default = Color3.fromRGB(96, 205, 255)
+    })
+    Colorpicker:OnChanged(function()
+        print("Colorpicker changed:", Colorpicker.Value)
+    end)
+    Colorpicker:SetValueRGB(Color3.fromRGB(0, 255, 140))
+
+    local TColorpicker = Tabs.Main:AddColorpicker("TransparencyColorpicker", {
+        Title = "Transparency Colorpicker",
+        Description = "Adjust color and transparency",
+        Transparency = 0,
+        Default = Color3.fromRGB(96, 205, 255)
+    })
+    TColorpicker:OnChanged(function()
+        print("TColorpicker changed:", TColorpicker.Value, "Transparency:", TColorpicker.Transparency)
+    end)
+
+    local Keybind = Tabs.Main:AddKeybind("Keybind", {
+        Title = "Keybind",
+        Mode = "Toggle",
+        Default = "LeftControl",
+        Callback = function(Value)
+            print("Keybind clicked!", Value)
+        end,
+        ChangedCallback = function(New)
+            print("Keybind changed!", New)
+        end
+    })
+    Keybind:OnClick(function()
+        print("Keybind clicked:", Keybind:GetState())
+    end)
+    Keybind:OnChanged(function()
+        print("Keybind changed:", Keybind.Value)
+    end)
+
+    task.spawn(function()
+        while true do
+            wait(1)
+            local state = Keybind:GetState()
+            if state then
+                print("Keybind is being held down")
             end
+            if Fluent.Unloaded then break end
+        end
+    end)
+    Keybind:SetValue("MB2", "Toggle")
+
+    local Input = Tabs.Main:AddInput("Input", {
+        Title = "Input",
+        Default = "Default",
+        Placeholder = "Enter text",
+        Numeric = false,
+        Finished = false,
+        Callback = function(Value)
+            print("Input changed:", Value)
         end
     })
-
-    Tabs.Scripts:AddButton({
-        Title = "Sample Script",
-        Description = "Run a sample ESP script",
-        Callback = function()
-            local sampleScript = [[
-                -- Sample ESP Script
-                local Players = game:GetService("Players")
-                for _, player in pairs(Players:GetPlayers()) do
-                    if player ~= Players.LocalPlayer then
-                        local highlight = Instance.new("Highlight")
-                        highlight.Parent = player.Character
-                        highlight.FillColor = Color3.fromRGB(255, 0, 0)
-                    end
-                end
-            ]]
-            if Gui.OnExecute then
-                Gui.OnExecute(sampleScript)
-            end
-        end
-    })
-
-    -- Tab Settings
-    local themeToggle = Tabs.Settings:AddToggle({
-        Title = "Acrylic Effect",
-        Default = true,
-        Callback = function(value)
-            Fluent.Options.Acrylic = value
-            Fluent:UpdateAcrylic()
-        end
-    })
-
-    Tabs.Settings:AddButton({
-        Title = "Destroy GUI",
-        Description = "Close the script hub",
-        Callback = function()
-            Window:Destroy()
-        end
-    })
-
-    -- Chọn tab mặc định
-    Window:SelectTab(1)
+    Input:OnChanged(function()
+        print("Input updated:", Input.Value)
+    end)
 end
 
-return Gui
+-- Build Settings Tab
+SaveManager:BuildConfigSection(Tabs.Settings)
+InterfaceManager:BuildInterfaceSection(Tabs.Settings)
+
+-- Select Main Tab
+Window:SelectTab(1)
+
+return Fluent
