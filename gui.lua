@@ -1,31 +1,23 @@
--- RareXploit GUI Configuration by Rarechive
-local HttpService = game:GetService("HttpService")
-
--- Load Fluent with error handling
-local Fluent
-local success, err = pcall(function()
-    Fluent = loadstring(HttpService:GetAsync("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
-end)
-
-if not success or not Fluent then
-    warn("Failed to load Fluent UI in gui.lua: " .. tostring(err))
-    return
-end
-
--- GUI Setup
-Fluent:CreateWindow({
-    Title = "RareXploit",
-    SubTitle = "by Rarechive",
-    Theme = "Dark",
+local Fluent = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/UI-Library/main/Fluent/Library.lua"))()
+local Window = Fluent:CreateWindow({
+    Title = "RareXploit — by Rarechive",
+    SubTitle = "Bé là của anh Nhật",
+    TabWidth = 120,
+    Size = UDim2.fromOffset(460, 380),
     Acrylic = true,
+    Theme = "Darker",
     MinimizeKey = Enum.KeyCode.RightControl
 })
 
--- Load Main Script
-local successMain, errMain = pcall(function()
-    loadstring(HttpService:GetAsync("https://raw.githubusercontent.com/rarechive/rarechive-mainScript/main/main.lua"))()
-end)
+local Tabs = {
+    Info = Window:AddTab({ Title = "Information", Icon = "info" }),
+    Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
+}
 
-if not successMain then
-    warn("Failed to load main.lua: " .. tostring(errMain))
-end
+Tabs.Info:AddParagraph({
+    Title = "RareXploit",
+    Content = "Script Hub made by Rarechive for Roblox. Yêu anh Nhật nhiều nhiều."
+})
+
+Window:SelectTab(1)
+Fluent:Notify({ Title = "RareXploit", Content = "Loaded successfully!", Duration = 6 })
