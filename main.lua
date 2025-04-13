@@ -3,11 +3,10 @@ local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/
 local Players = game:GetService("Players")
 local Player = Players.LocalPlayer
 
--- Initialize Window
+-- Initialize Window without Size
 local Window = Fluent:CreateWindow({
     Title = "RareXploit",
-    SubTitle = "by Rarechive",
-    Size = UDim2.new(0, 400, 0, 300) -- Rectangle size for mobile
+    SubTitle = "by Rarechive"
 })
 
 -- Tabs
@@ -47,14 +46,15 @@ Tabs.Setting:AddButton({
     end
 })
 
--- Center UI
+-- Center UI and set size manually
 local ScreenGui = Player.PlayerGui:FindFirstChild("FluentGui") or Fluent.ScreenGui
 ScreenGui.DisplayOrder = 999
 ScreenGui.IgnoreGuiInset = true
 ScreenGui.ResetOnSpawn = false
 
 local Frame = ScreenGui:FindFirstChild("Main") or ScreenGui.Frame
-Frame.Position = UDim2.new(0.5, -200, 0.5, -150) -- Center with offset for 400x300 size
+Frame.Size = UDim2.new(0, 400, 0, 300) -- Set size here instead
+Frame.Position = UDim2.new(0.5, -200, 0.5, -150) -- Center with offset for 400x300
 
 -- Notify on Load
 Fluent:Notify({
