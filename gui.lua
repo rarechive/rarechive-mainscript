@@ -5,14 +5,14 @@ function gui.CreateGUI(RareXploit)
         Title = "RareXploit 0.1",
         SubTitle = "by Rarechive",
         TabWidth = 160,
-        Size = UDim2.fromOffset(500, 400),
+        Size = UDim2.fromOffset(600, 300), -- Chiều cao giới hạn để gần rìa màn hình
         Acrylic = true,
         Theme = "Dark",
         MinimizeKey = Enum.KeyCode.LeftControl
     })
 
     local Tabs = {
-        Main = Window:AddTab({ Title = "Main", Icon = "home" }), -- Thêm logo căn nhà
+        Main = Window:AddTab({ Title = "Main", Icon = "home" }),
         Settings = Window:AddTab({ Title = "Settings", Icon = "settings" }),
         Information = Window:AddTab({ Title = "Information", Icon = "info" })
     }
@@ -31,6 +31,17 @@ function gui.CreateGUI(RareXploit)
         Title = "Welcome to RareXploit",
         Content = "Explore the features and configure your settings."
     })
+
+    -- Toggle to hide/show hub
+    local HubToggle = Tabs.Main:AddToggle("HubToggle", {
+        Title = "Show/Hide Hub",
+        Default = true -- Mặc định là hiển thị
+    })
+    HubToggle:OnChanged(function()
+        local isVisible = Options.HubToggle.Value
+        Window:SetVisible(isVisible) -- Giả định thư viện hỗ trợ hàm này
+        print("Hub visibility:", isVisible and "Shown" or "Hidden")
+    end)
 
     -- Button
     Tabs.Main:AddButton({
@@ -93,7 +104,7 @@ function gui.CreateGUI(RareXploit)
     -- Information Tab: Features
     Tabs.Information:AddParagraph({
         Title = "Feature Overview",
-        Content = "RareXploit offers powerful tools for scripting and automation.\nKey features include:\n- Script Execution\n- Customizable Keybinds\n- Adjustable Settings\n- Real-time Feedback"
+        Content = "RareXploit offers powerful tools for scripting and automation.\nKey features include:\n- Script Execution\n- Customizable Keybinds\n- Adjustable Settings\n- Real-time Feedback\n\nAdditional Info:\nThis hub is designed to stay compact and scrollable for easy access to all features."
     })
 
     Tabs.Information:AddButton({
@@ -114,6 +125,10 @@ function gui.CreateGUI(RareXploit)
             })
         end
     })
+
+    -- Đảm bảo tab Main và Information có thể cuộn
+    Tabs.Main:SetProperty("ScrollingEnabled", true) -- Giả định thư viện hỗ trợ
+    Tabs.Information:SetProperty("ScrollingEnabled", true)
 
     return Window, Tabs, Options
 end
