@@ -12,9 +12,9 @@ function gui.CreateGUI(RareXploit)
     })
 
     local Tabs = {
-        Main = Window:AddTab({ Title = "Main", Icon = "home" }), -- Thêm logo căn nhà
-        Settings = Window:AddTab({ Title = "Settings", Icon = "settings" }),
-        Information = Window:AddTab({ Title = "Information", Icon = "info" })
+        Information = Window:AddTab({ Title = "Information", Icon = "info" }),
+        Main = Window:AddTab({ Title = "Main", Icon = "home" }),
+        Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
     }
 
     local Options = RareXploit.Options
@@ -26,68 +26,10 @@ function gui.CreateGUI(RareXploit)
         Duration = 5
     })
 
-    -- Main Tab: Core Features
+    -- Main Tab: Only Welcome
     Tabs.Main:AddParagraph({
         Title = "Welcome to RareXploit",
         Content = "Explore the features and configure your settings."
-    })
-
-    -- Button
-    Tabs.Main:AddButton({
-        Title = "Execute Script",
-        Description = "Run your custom script",
-        Callback = function()
-            Window:Dialog({
-                Title = "Execute",
-                Content = "Are you sure you want to execute the script?",
-                Buttons = {
-                    {
-                        Title = "Confirm",
-                        Callback = function()
-                            print("Script executed.")
-                        end
-                    },
-                    {
-                        Title = "Cancel",
-                        Callback = function()
-                            print("Execution cancelled.")
-                        end
-                    }
-                }
-            })
-        end
-    })
-
-    -- Toggle
-    local Toggle = Tabs.Main:AddToggle("MyToggle", {
-        Title = "Enable Feature",
-        Default = false
-    })
-    Toggle:OnChanged(function()
-        print("Feature enabled:", Options.MyToggle.Value)
-    end)
-
-    -- Slider
-    local Slider = Tabs.Main:AddSlider("Slider", {
-        Title = "Speed Adjustment",
-        Description = "Adjust feature intensity",
-        Default = 2,
-        Min = 0,
-        Max = 5,
-        Rounding = 1,
-        Callback = function(Value)
-            print("Speed set to:", Value)
-        end
-    })
-
-    -- Keybind
-    local Keybind = Tabs.Main:AddKeybind("Keybind", {
-        Title = "Quick Toggle",
-        Mode = "Toggle",
-        Default = "LeftControl",
-        Callback = function(Value)
-            print("Keybind activated:", Value)
-        end
     })
 
     -- Information Tab: Features
@@ -114,6 +56,9 @@ function gui.CreateGUI(RareXploit)
             })
         end
     })
+
+    -- Automatically select Information tab on start
+    Window:SelectTab(Tabs.Information)
 
     return Window, Tabs, Options
 end
