@@ -1,1 +1,30 @@
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local Workspace = game:GetService("Workspace")
+local Plr = Players.LocalPlayer
+local Clipon = false
 
+-- Noclip functionality
+local function toggleNoclip()
+    if not Clipon then
+        Clipon = true
+        local Stepped
+        Stepped = RunService.Stepped:Connect(function()
+            if Clipon then
+                for _, b in pairs(Workspace:GetChildren()) do
+                    if b.Name == Plr.Name then
+                        for _, v in pairs(b:GetChildren()) do
+                            if v:IsA("BasePart") then
+                                v.CanCollide = false
+                            end
+                        end
+                    end
+                end
+            else
+                Stepped:Disconnect()
+            end
+        end)
+    else
+        Clipon = false
+    end
+end
