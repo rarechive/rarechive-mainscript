@@ -14,6 +14,7 @@ function gui.CreateGUI(RareXploit)
     local Tabs = {
         Information = Window:AddTab({ Title = "Information", Icon = "info" }),
         Main = Window:AddTab({ Title = "Main", Icon = "home" }),
+        Player = Window:AddTab({ Title = "Player", Icon = "person" }), -- Added Player tab
         Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
     }
 
