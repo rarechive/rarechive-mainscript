@@ -14,7 +14,7 @@ function gui.CreateGUI(RareXploit)
     local Tabs = {
         Information = Window:AddTab({ Title = "Information", Icon = "info" }),
         Main = Window:AddTab({ Title = "Main", Icon = "home" }),
-        Player = Window:AddTab({ Title = "Player", Icon = "person" }), -- Added Player tab
+        Player = Window:AddTab({ Title = "Player", Icon = "user" }), -- Thay "person" bằng "user"
         Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
     }
 
@@ -56,6 +56,12 @@ function gui.CreateGUI(RareXploit)
                 }
             })
         end
+    })
+
+    -- Player Tab: Basic Content
+    Tabs.Player:AddParagraph({
+        Title = "Player Controls",
+        Content = "Manage player settings and actions here."
     })
 
     -- Automatically select Information tab on start
