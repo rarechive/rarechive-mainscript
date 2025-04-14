@@ -2,10 +2,10 @@ local gui = {}
 
 function gui.CreateGUI(RareXploit)
     local Window = RareXploit:CreateWindow({
-        Title = "RareXploit 0.5",
+        Title = "RareXploit 0.1",
         SubTitle = "by Rarechive",
         TabWidth = 160,
-        Size = UDim2.fromOffset(1280, 100), -- Width spans wide (e.g., 1280), height reduced to 100
+        Size = UDim2.fromOffset(500, 300), -- Reduced height from 400 to 300
         Acrylic = true,
         Theme = "Dark",
         MinimizeKey = Enum.KeyCode.LeftControl
