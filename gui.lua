@@ -5,12 +5,11 @@ function gui.CreateGUI(RareXploit)
         Title = "RareXploit 0.1",
         SubTitle = "by Rarechive",
         TabWidth = 160,
-        Size = UDim2.fromOffset(450, 350), -- Giảm kích thước hub (rộng 450, cao 350)
+        Size = UDim2.new(1, 0, 0.7, 0), -- Chiều rộng 100%, chiều cao 70% để tránh tràn đáy
+        Position = UDim2.new(0, 0, 0.15, 0), -- Căn giữa dọc, cách đỉnh 15%
         Acrylic = true,
         Theme = "Dark",
-        MinimizeKey = Enum.KeyCode.LeftControl,
-        ClipsDescendants = true, -- Ngăn nội dung tràn ra ngoài khung
-        Position = UDim2.fromOffset(50, 50) -- Đặt vị trí cách viền màn hình để tránh tràn
+        MinimizeKey = Enum.KeyCode.LeftControl
     })
 
     local Tabs = {
