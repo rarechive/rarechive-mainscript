@@ -14,6 +14,7 @@ function gui.CreateGUI(RareXploit)
     local Tabs = {
         Information = Window:AddTab({ Title = "Information", Icon = "info" }),
         Main = Window:AddTab({ Title = "Main", Icon = "home" }),
+        Player = Window:AddTab({ Title = "Player", Icon = "person" }), -- New Player tab with person icon
         Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
     }
 
@@ -54,6 +55,15 @@ function gui.CreateGUI(RareXploit)
                     }
                 }
             })
+        end
+    })
+
+    -- Player Tab: Noclip Toggle
+    Tabs.Player:AddToggle({
+        Title = "Noclip",
+        Description = "Enable or disable noclip",
+        Callback = function(state)
+            -- No logic implemented yet
         end
     })
 
