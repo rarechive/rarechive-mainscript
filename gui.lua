@@ -5,7 +5,7 @@ function gui.CreateGUI(RareXploit)
         Title = "RareXploit 0.1",
         SubTitle = "by Rarechive",
         TabWidth = 160,
-        Size = UDim2.fromOffset(480, 345),
+        Size = UDim2.fromOffset(490, 345),
         Acrylic = true,
         Theme = "Dark",
         MinimizeKey = Enum.KeyCode.LeftControl
