@@ -1,6 +1,10 @@
 local gui = {}
 
 function gui.CreateGUI(RareXploit)
+    if not RareXploit then
+        error("RareXploit is nil! Ensure it is properly initialized before calling CreateGUI.")
+    end
+
     local Window = RareXploit:CreateWindow({
         Title = "RareXploit 0.1",
         SubTitle = "by Rarechive",
@@ -11,10 +15,14 @@ function gui.CreateGUI(RareXploit)
         MinimizeKey = Enum.KeyCode.LeftControl
     })
 
+    if not Window then
+        error("Failed to create Window! Check if RareXploit:CreateWindow is functioning correctly.")
+    end
+
     local Tabs = {
         Information = Window:AddTab({ Title = "Information", Icon = "info" }),
         Main = Window:AddTab({ Title = "Main", Icon = "home" }),
-        Player = Window:AddTab({ Title = "Player", Icon = "person" }), -- New Player tab with person icon
+        Player = Window:AddTab({ Title = "Player", Icon = "person" }),
         Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
     }
 
