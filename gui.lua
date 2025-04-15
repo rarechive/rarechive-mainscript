@@ -2,7 +2,7 @@ local gui = {}
 
 function gui.CreateGUI(RareXploit)
     local Window = RareXploit:CreateWindow({
-        Title = "RareXploit 0.1",
+        Title = "RareXploit 0.111",
         SubTitle = "by Rarechive",
         TabWidth = 160,
         Size = UDim2.fromOffset(490, 345),
@@ -14,7 +14,7 @@ function gui.CreateGUI(RareXploit)
     local Tabs = {
         Information = Window:AddTab({ Title = "Information", Icon = "info" }),
         Main = Window:AddTab({ Title = "Main", Icon = "home" }),
-        Player = Window:AddTab({ Title = "Player", Icon = "user" }), -- Thay "person" bằng "user"
+        Player = Window:AddTab({ Title = "Player", Icon = "user" }),
         Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
     }
 
@@ -63,6 +63,18 @@ function gui.CreateGUI(RareXploit)
         Title = "Player Controls",
         Content = "Manage player settings and actions here."
     })
+
+    -- Player Tab: NoClip Toggle
+    local NoClipToggle = Tabs.Player:AddToggle("NoClipToggle", {
+        Title = "NoClip",
+        Default = false
+    })
+
+    NoClipToggle:OnChanged(function()
+        print("NoClip Toggle changed:", Options.NoClipToggle.Value)
+    end)
+
+    Options.NoClipToggle:SetValue(false)
 
     -- Automatically select Information tab on start
     Window:SelectTab(Tabs.Information)
