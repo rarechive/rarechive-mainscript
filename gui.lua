@@ -14,7 +14,7 @@ function gui.CreateGUI(RareXploit)
     local Tabs = {
         Information = Window:AddTab({ Title = "Information", Icon = "info" }),
         Main = Window:AddTab({ Title = "Main", Icon = "home" }),
-        Player = Window:AddTab({ Title = "Player", Icon = "user" }),
+        Player = Window:AddTab({ Title = "Player", Icon = "user" }), -- Thay "person" bằng "user"
         Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
     }
 
@@ -62,16 +62,6 @@ function gui.CreateGUI(RareXploit)
     Tabs.Player:AddParagraph({
         Title = "Player Controls",
         Content = "Manage player settings and actions here."
-    })
-
-    -- Add NoClip Toggle Button
-    Tabs.Player:AddToggle({
-        Title = "NoClip",
-        Description = "Toggle NoClip mode",
-        Default = false,
-        Callback = function(value)
-            -- No functionality implemented yet
-        end
     })
 
     -- Automatically select Information tab on start
