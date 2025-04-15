@@ -65,11 +65,14 @@ function gui.CreateGUI(RareXploit)
     })
 
     -- Player Tab: NoClip Toggle
-Tabs.Player:AddToggle("NoClipToggle", {
-    Title = "NoClip",
-    Description = "Wallhack, Through object",
-    Default = false
-})
+    Tabs.Player:AddToggle("NoClipToggle", {
+        Title = "NoClip",
+        Description = "Wallhack, Through object",
+        Default = false,
+        Callback = function(value)
+            toggleNoclip() -- Call the toggleNoclip function from logicnoclip
+        end
+    })
 
     -- Automatically select Information tab on start
     Window:SelectTab(Tabs.Information)
