@@ -4,43 +4,7 @@ local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/d
 local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
 
 -- Load GUI from gui.lua
-local gui_success, gui = pcall(loadstring, game:HttpGet("https://raw.githubusercontent.com/rarechive/rarechive-mainscript/refs/heads/main/gui.lua"))
-if not gui_success then
-    warn("Failed to load gui.lua: " .. tostring(gui))
-    RareXploit:Notify({
-        Title = "Error",
-        Content = "Failed to load GUI. Check GitHub URL or network.",
-        Duration = 10
-    })
-    return -- Stop execution if GUI fails to load
-end
-
--- Load NoClip logic from logicnoclip with error handling
-local noclip_success, noclip_result = pcall(loadstring, game:HttpGet("https://raw.githubusercontent.com/rarechive/rarechive-mainscript/refs/heads/main/logicnoclip"))
-if not noclip_success then
-    warn("Failed to load logicnoclip: " .. tostring(noclip_result))
-    RareXploit:Notify({
-        Title = "Error",
-        Content = "Failed to load NoClip functionality. Check GitHub URL or network.",
-        Duration = 10
-    })
-else
-    -- Verify toggleNoclip is set
-    if _G.toggleNoclip then
-        RareXploit:Notify({
-            Title = "Success",
-            Content = "NoClip functionality loaded successfully.",
-            Duration = 5
-        })
-    else
-        warn("toggleNoclip not set in global scope")
-        RareXploit:Notify({
-            Title = "Warning",
-            Content = "NoClip function not properly initialized.",
-            Duration = 10
-        })
-    end
-end
+local gui = loadstring(game:HttpGet("https://raw.githubusercontent.com/rarechive/rarechive-mainscript/refs/heads/main/gui.lua"))()
 
 -- Create the GUI
 local Window, Tabs, Options = gui.CreateGUI(RareXploit)
