@@ -72,10 +72,15 @@ function gui.CreateGUI(RareXploit)
         Callback = function(value)
             if _G.toggleNoclip then
                 _G.toggleNoclip()
+                RareXploit:Notify({
+                    Title = "NoClip",
+                    Content = "NoClip " .. (value and "enabled" or "disabled"),
+                    Duration = 3
+                })
             else
                 RareXploit:Notify({
                     Title = "Error",
-                    Content = "NoClip functionality not loaded.",
+                    Content = "NoClip functionality not loaded. Check script setup.",
                     Duration = 5
                 })
             end
