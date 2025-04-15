@@ -6,6 +6,9 @@ local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.
 -- Load GUI from gui.lua
 local gui = loadstring(game:HttpGet("https://raw.githubusercontent.com/rarechive/rarechive-mainscript/refs/heads/main/gui.lua"))()
 
+-- Load NoClip logic from logicnoclip
+local noclip = loadstring(game:HttpGet("https://raw.githubusercontent.com/rarechive/rarechive-mainscript/refs/heads/main/logicnoclip"))()
+
 -- Create the GUI
 local Window, Tabs, Options = gui.CreateGUI(RareXploit)
 
