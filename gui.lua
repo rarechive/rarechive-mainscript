@@ -70,7 +70,15 @@ function gui.CreateGUI(RareXploit)
         Description = "Wallhack, Through object",
         Default = false,
         Callback = function(value)
-            toggleNoclip() -- Call the toggleNoclip function from logicnoclip
+            if _G.toggleNoclip then
+                _G.toggleNoclip()
+            else
+                RareXploit:Notify({
+                    Title = "Error",
+                    Content = "NoClip functionality not loaded.",
+                    Duration = 5
+                })
+            end
         end
     })
 
