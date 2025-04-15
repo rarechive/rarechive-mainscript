@@ -64,13 +64,14 @@ function gui.CreateGUI(RareXploit)
         Content = "Manage player settings and actions here."
     })
 
-    -- Add Noclip Toggle Button
+    -- Add Noclip Toggle Switch
     local noclipEnabled = false
-    Tabs.Player:AddButton({
-        Title = "Toggle Noclip",
+    Tabs.Player:AddToggle({
+        Title = "Noclip",
         Description = "Enable/Disable Noclip",
-        Callback = function()
-            noclipEnabled = not noclipEnabled
+        Default = false,
+        Callback = function(value)
+            noclipEnabled = value
             RareXploit:Notify({
                 Title = "Noclip",
                 Content = "Noclip is now " .. (noclipEnabled and "Enabled" or "Disabled"),
