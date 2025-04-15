@@ -65,16 +65,10 @@ function gui.CreateGUI(RareXploit)
     })
 
     -- Player Tab: NoClip Toggle
-    local NoClipToggle = Tabs.Player:AddToggle("NoClipToggle", {
-        Title = "NoClip",
-        Default = false
-    })
-
-    NoClipToggle:OnChanged(function()
-        print("NoClip Toggle changed:", Options.NoClipToggle.Value)
-    end)
-
-    Options.NoClipToggle:SetValue(false)
+Tabs.Player:AddToggle("NoClipToggle", {
+    Title = "NoClip",
+    Default = false
+})
 
     -- Automatically select Information tab on start
     Window:SelectTab(Tabs.Information)
