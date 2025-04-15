@@ -2,7 +2,7 @@ local gui = {}
 
 function gui.CreateGUI(RareXploit)
     local Window = RareXploit:CreateWindow({
-        Title = "RareXploit 0.111",
+        Title = "RareXploit 0.1133",
         SubTitle = "by Rarechive",
         TabWidth = 160,
         Size = UDim2.fromOffset(490, 345),
